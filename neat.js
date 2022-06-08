@@ -7,12 +7,12 @@ function init() {
 
 (function(window){
 	var document = window.document;
-	var chrome = window.chrome;
+	var browser = window.browser;
 	var localStorage = window.localStorage;
 	var navigator = window.navigator;
 	var body = document.body;
-	var _m = chrome.i18n.getMessage;
-	var _b = chrome.extension.getBackgroundPage().console;
+	var _m = browser.i18n.getMessage;
+	var _b = browser.extension.getBackgroundPage().console;
 	
 	// Error alert
 	var AlertDialog = {
@@ -144,7 +144,7 @@ function init() {
 						html += generateHTML(children, level + 1);
 					} else {
 						(function(_id){
-							chrome.bookmarks.getChildren(_id, function(children){
+							browser.bookmarks.getChildren(_id, function(children){
 								var html = generateHTML(children, level + 1);
 								var div = document.createElement('div');
 								div.innerHTML = html;
@@ -166,7 +166,7 @@ function init() {
 	};
 	
 	var $tree = $('tree');
-	chrome.bookmarks.getTree(function(tree){
+	browser.bookmarks.getTree(function(tree){
 		var html = generateHTML(tree[0].children);
 		$tree.innerHTML = html;
 		
@@ -225,7 +225,7 @@ function init() {
 		var children = parent.querySelector('ul');
 		if (!children){
 			var id = parent.id.replace('neat-tree-item-', '');
-			chrome.bookmarks.getChildren(id, function(children){
+			browser.bookmarks.getChildren(id, function(children){
 				var html = generateHTML(children, parseInt(parent.parentNode.dataset.level) + 1);
 				var div = document.createElement('div');
 				div.innerHTML = html;
@@ -278,7 +278,7 @@ function init() {
 		if (value == prevValue) return;
 		prevValue = value;
 		searchMode = true;
-		chrome.bookmarks.search(value, function(results){
+		browser.bookmarks.search(value, function(results){
 			var v = value.toLowerCase();
 			var vPattern = new RegExp('^' + value.escapeRegExp().replace(/\s+/g, '.*'), 'ig');
 			if (results.length > 1){
@@ -315,7 +315,7 @@ function init() {
 			var lis = $results.querySelectorAll('li');
 			Array.forEach(function(li){
 				var parentId = li.dataset.parentid;
-				chrome.bookmarks.get(parentId, function(node){
+				browser.bookmarks.get(parentId, function(node){
 					if (!node || !node.length) return;
 					var a = li.querySelector('a');
 					a.title = _m('parentFolder', node[0].title) + '\n' + a.title;
@@ -485,13 +485,13 @@ function init() {
 	var openBookmarksLimit = 10;
 	var actions = {
 		openBookmark: function(url){
-			chrome.tabs.getSelected(null, function(tab){
+			browser.tabs.getSelected(null, function(tab){
 				try {
                     decodedURL = decodeURIComponent(url);
                 } catch (e) {
                     return;
                 }
-				chrome.tabs.update(tab.id, {
+				browser.tabs.update(tab.id, {
 					url: decodedURL
 				});
 				if (!bookmarkClickStayOpen) setTimeout(window.close, 200);
@@ -500,15 +500,15 @@ function init() {
 		
 		openBookmarkNewTab: function(url, selected, blankTabCheck){
 			var open = function(){
-				chrome.tabs.create({
+				browser.tabs.create({
 					url: url,
 					selected: selected
 				});
 			};
 			if (blankTabCheck){
-				chrome.tabs.getSelected(null, function(tab){
+				browser.tabs.getSelected(null, function(tab){
 					if (/^chrome:\/\/newtab/i.test(tab.url)){
-						chrome.tabs.update(tab.id, {
+						browser.tabs.update(tab.id, {
 							url: url
 						});
 						if (!bookmarkClickStayOpen) setTimeout(window.close, 200);
@@ -522,7 +522,7 @@ function init() {
 		},
 		
 		openBookmarkNewWindow: function(url, incognito){
-			chrome.windows.create({
+			browser.windows.create({
 				url: url,
 				incognito: incognito
 			});
@@ -531,12 +531,12 @@ function init() {
 		openBookmarks: function(urls, selected){
 			var urlsLen = urls.length;
 			var open = function(){
-				chrome.tabs.create({
+				browser.tabs.create({
 					url: urls.shift(),
 					selected: selected // first tab will be selected
 				});
 				for (var i = 0, l = urls.length; i < l; i++){
-					chrome.tabs.create({
+					browser.tabs.create({
 						url: urls[i],
 						selected: false
 					});
@@ -557,7 +557,7 @@ function init() {
 		openBookmarksNewWindow: function(urls, incognito){
 			var urlsLen = urls.length;
 			var open = function(){
-				chrome.windows.create({
+				browser.windows.create({
 					url: urls,
 					incognito: incognito
 				});
@@ -576,7 +576,7 @@ function init() {
 		},
 		
 		editBookmarkFolder: function(id){
-			chrome.bookmarks.get(id, function(nodeList){
+			browser.bookmarks.get(id, function(nodeList){
 				if (!nodeList.length) return;
 				var node = nodeList[0];
 				var url = node.url;
@@ -589,7 +589,7 @@ function init() {
 					name: node.title,
 					url: decodeURIComponent(url),
 					fn: function(name, url){
-						chrome.bookmarks.update(id, {
+						browser.bookmarks.update(id, {
 							title: name,
 							url: isBookmark ? url : ''
 						}, function(n){
@@ -620,7 +620,7 @@ function init() {
 		deleteBookmark: function(id){
 			var li1 = $('neat-tree-item-' + id);
 			var li2 = $('results-item-' + id);
-			chrome.bookmarks.remove(id, function(){
+			browser.bookmarks.remove(id, function(){
 				if (li1){
 					var nearLi1 = li1.nextElementSibling || li1.previousElementSibling;
 					li1.destroy();
@@ -652,7 +652,7 @@ function init() {
 					button1: '<strong>' + _m('delete') + '</strong>',
 					button2: _m('nope'),
 					fn1: function(){
-						chrome.bookmarks.removeTree(id, function(){
+						browser.bookmarks.removeTree(id, function(){
 							li.destroy();
 						});
 						var nearLi = li.nextElementSibling || li.previousElementSibling;
@@ -663,7 +663,7 @@ function init() {
 					}
 				});
 			} else {
-				chrome.bookmarks.removeTree(id, function(){
+				browser.bookmarks.removeTree(id, function(){
 					li.destroy();
 				});
 				var nearLi = li.nextElementSibling || li.previousElementSibling;
@@ -699,7 +699,7 @@ function init() {
 		} else if (el.tagName == 'SPAN'){
 			var li = el.parentNode;
 			var id = li.id.replace('neat-tree-item-', '');
-			chrome.bookmarks.getChildren(id, function(children){
+			browser.bookmarks.getChildren(id, function(children){
 				var urls = Array.map(function(c){
 					return c.url;
 				}, children).clean();
@@ -860,7 +860,7 @@ function init() {
 		if (el.tagName != 'COMMAND') return;
 		var li = currentContext.parentNode;
 		var id = li.id.replace('neat-tree-item-', '');
-		chrome.bookmarks.getChildren(id, function(children){
+		browser.bookmarks.getChildren(id, function(children){
 			var urls = Array.map(function(c){
 				return c.url;
 			}, children).clean();
@@ -1098,7 +1098,7 @@ function init() {
 				e.preventDefault();
 				var id = li.id.replace(/(neat\-tree|results)\-item\-/, '');
 				if (li.hasClass('parent')){
-					chrome.bookmarks.getChildren(id, function(children){
+					browser.bookmarks.getChildren(id, function(children){
 						var urlsLen = Array.map(function(c){
 							return c.url;
 						}, children).clean().length;
@@ -1334,13 +1334,13 @@ function init() {
 			var elRect = el.getBoundingClientRect();
 			var elRectTop = elRect.top + document.body.scrollTop;
 			var moveBottom = (clientY >= elRectTop + elRect.height / 2);
-			chrome.bookmarks.get(id, function(node){
+			browser.bookmarks.get(id, function(node){
 				if (!node || !node.length) return;
 				node = node[0];
 				var index = node.index;
 				var parentId = node.parentId;
 				if (draggedID){
-					chrome.bookmarks.move(draggedID, {
+					browser.bookmarks.move(draggedID, {
 						parentId: parentId,
 						index: moveBottom ? ++index : index
 					}, function(){
@@ -1365,12 +1365,12 @@ function init() {
 			}
 			if (move > 0){
 				var moveBottom = (move == 2);
-				chrome.bookmarks.get(id, function(node){
+				browser.bookmarks.get(id, function(node){
 					if (!node || !node.length) return;
 					node = node[0];
 					var index = node.index;
 					var parentId = node.parentId;
-					chrome.bookmarks.move(draggedID, {
+					browser.bookmarks.move(draggedID, {
 						parentId: parentId,
 						index: moveBottom ? ++index : index
 					}, function(){
@@ -1381,7 +1381,7 @@ function init() {
 					});
 				});
 			} else {
-				chrome.bookmarks.move(draggedID, {
+				browser.bookmarks.move(draggedID, {
 					parentId: id
 				}, function(){
 					var ul = elParent.querySelector('ul');
@@ -1493,9 +1493,6 @@ function init() {
 				break;
 		}
 	});
-	
-	// Fix stupid Chrome build 536 bug
-	if (version.build >= 536) body.addClass('chrome-536');
 	
 	// Fix stupid wrong offset of the page on Mac
 	if (os == 'mac'){
