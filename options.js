@@ -2,46 +2,46 @@ window.addEventListener('load', init, false);
 
 function init() {
 	// i18n of text strings
-	$('extName').innerHTML = chrome.i18n.getMessage('extName');
-	$('version').innerHTML = chrome.app.getDetails().version // undocumented method!
-	$('options').innerHTML = chrome.i18n.getMessage('options');
-	$('general').innerHTML = chrome.i18n.getMessage('general');
-	$('optionClickNewTab').innerHTML = chrome.i18n.getMessage('optionClickNewTab');
-	$('optionOpenNewTab').innerHTML = chrome.i18n.getMessage('optionOpenNewTab');
-	$('optionCloseUnusedFolders').innerHTML = chrome.i18n.getMessage('optionCloseUnusedFolders');
-	$('optionPopupStays').innerHTML = chrome.i18n.getMessage('optionPopupStays');
-	$('optionConfirmOpenFolder').innerHTML = chrome.i18n.getMessage('optionConfirmOpenFolder');
-	$('optionRememberPrevState').innerHTML = chrome.i18n.getMessage('optionRememberPrevState');
-	$('accessibility').innerHTML = chrome.i18n.getMessage('accessibility');
-	$('optionZoom').innerHTML = chrome.i18n.getMessage('optionZoom');
-	$('customIcon').innerHTML = chrome.i18n.getMessage('customIcon');
-	$('customIconText').innerHTML = chrome.i18n.getMessage('customIconText');
-	$('resetSettings').innerHTML = chrome.i18n.getMessage('resetSettings');
-	var extName = chrome.i18n.getMessage('extName');
-	var version = chrome.i18n.getMessage('version');
-	$('resetText').innerHTML = chrome.i18n.getMessage('resetText', [extName]);
-	$('reset').innerHTML = chrome.i18n.getMessage('reset');
-	$('customStyles').innerHTML = chrome.i18n.getMessage('customStyles');
+	$('extName').innerHTML = browser.i18n.getMessage('extName');
+	$('version').innerHTML = browser.app.getDetails().version // undocumented method!
+	$('options').innerHTML = browser.i18n.getMessage('options');
+	$('general').innerHTML = browser.i18n.getMessage('general');
+	$('optionClickNewTab').innerHTML = browser.i18n.getMessage('optionClickNewTab');
+	$('optionOpenNewTab').innerHTML = browser.i18n.getMessage('optionOpenNewTab');
+	$('optionCloseUnusedFolders').innerHTML = browser.i18n.getMessage('optionCloseUnusedFolders');
+	$('optionPopupStays').innerHTML = browser.i18n.getMessage('optionPopupStays');
+	$('optionConfirmOpenFolder').innerHTML = browser.i18n.getMessage('optionConfirmOpenFolder');
+	$('optionRememberPrevState').innerHTML = browser.i18n.getMessage('optionRememberPrevState');
+	$('accessibility').innerHTML = browser.i18n.getMessage('accessibility');
+	$('optionZoom').innerHTML = browser.i18n.getMessage('optionZoom');
+	$('customIcon').innerHTML = browser.i18n.getMessage('customIcon');
+	$('customIconText').innerHTML = browser.i18n.getMessage('customIconText');
+	$('resetSettings').innerHTML = browser.i18n.getMessage('resetSettings');
+	var extName = browser.i18n.getMessage('extName');
+	var version = browser.i18n.getMessage('version');
+	$('resetText').innerHTML = browser.i18n.getMessage('resetText', [extName]);
+	$('reset').innerHTML = browser.i18n.getMessage('reset');
+	$('customStyles').innerHTML = browser.i18n.getMessage('customStyles');
 	var linkGithubGist = '<a href="http://gist.github.com/">GitHub Gist</a>';
-	$('customStylesText').innerHTML = chrome.i18n.getMessage('customStylesText', [linkGithubGist]);
+	$('customStylesText').innerHTML = browser.i18n.getMessage('customStylesText', [linkGithubGist]);
 	var neaterEmail = '<a href="mailto:neaterbookmarks@gmail.com?body=%0d%0dSent from Neater Bookmarks Options page">neaterbookmarks@gmail.com</a>';
-	$('optionsFooterText1').innerHTML = chrome.i18n.getMessage('optionsFooterText1', [neaterEmail]);
+	$('optionsFooterText1').innerHTML = browser.i18n.getMessage('optionsFooterText1', [neaterEmail]);
 	var neaterGithub = 'GitHub: <a href="http://goo.gl/s2kVi">http://goo.gl/s2kVi</a>';
-	$('optionsFooterText2').innerHTML = chrome.i18n.getMessage('optionsFooterText2', [extName, neaterGithub]);
+	$('optionsFooterText2').innerHTML = browser.i18n.getMessage('optionsFooterText2', [extName, neaterGithub]);
 	var neaterFaq = '<a href="http://goo.gl/DDMqE">http://goo.gl/DDMqE</a>';
-	$('optionsFooterText3').innerHTML = chrome.i18n.getMessage('optionsFooterText3', [neaterFaq]);
+	$('optionsFooterText3').innerHTML = browser.i18n.getMessage('optionsFooterText3', [neaterFaq]);
 	var neaterIssues = '<a href="http://goo.gl/Ct39y">http://goo.gl/Ct39y</a>';
-	$('optionsFooterText4').innerHTML = chrome.i18n.getMessage('optionsFooterText4', [neaterIssues]);
+	$('optionsFooterText4').innerHTML = browser.i18n.getMessage('optionsFooterText4', [neaterIssues]);
 	var neaterIcons = '<a href="http://goo.gl/0xQNp">http://goo.gl/0xQNp</a>';
-	$('optionsFooterText5').innerHTML = chrome.i18n.getMessage('optionsFooterText5', [neaterIcons]);
+	$('optionsFooterText5').innerHTML = browser.i18n.getMessage('optionsFooterText5', [neaterIcons]);
 	var neaterTranslate = 'WebTranslateIt: <a href="http://goo.gl/oDXMm">http://goo.gl/oDXMm</a>';
-	$('optionsFooterText6').innerHTML = chrome.i18n.getMessage('optionsFooterText6', [extName, neaterTranslate]);
+	$('optionsFooterText6').innerHTML = browser.i18n.getMessage('optionsFooterText6', [extName, neaterTranslate]);
 	var neatGithub = '<a href="http://github.com/cheeaun/neat-bookmarks">Neat Bookmarks</a>';
 	var linkCheeAun = '<a href="http://twitter.com/cheeaun">Lim Chee Aun</a>';
-	$('optionsFooterText7').innerHTML = chrome.i18n.getMessage('optionsFooterText7', [neatGithub, linkCheeAun]);
+	$('optionsFooterText7').innerHTML = browser.i18n.getMessage('optionsFooterText7', [neatGithub, linkCheeAun]);
 };
 
-var _m = chrome.i18n.getMessage;
+var _m = browser.i18n.getMessage;
 
 var __m = function(){
 	document.write(_m.apply(this, arguments));
@@ -112,7 +112,7 @@ document.addEventListener('DOMContentLoaded', function(){
 		ctx.clearRect(0, 0, 19, 19);
 		ctx.drawImage(customIconPreview, 0, 0, 19, 19);
 		var imageData = ctx.getImageData(0, 0, 19, 19);
-		chrome.browserAction.setIcon({imageData: imageData});
+		browser.browserAction.setIcon({imageData: imageData});
 		localStorage.customIcon = JSON.stringify(imageData.data);
 	};
 	if (localStorage.customIcon){
@@ -144,7 +144,7 @@ document.addEventListener('DOMContentLoaded', function(){
 	$('reset-button').addEventListener('click', function(){
 		localStorage.clear();
 		delete localStorage.customIcon;
-		chrome.browserAction.setIcon({path: 'icon.png'});
+		browser.browserAction.setIcon({path: 'icon.png'});
 		customIconPreview.src = 'icon.png';
 		dontLoad = true;
 		location.reload();
@@ -169,5 +169,5 @@ document.addEventListener('DOMContentLoaded', function(){
 });
 
 onerror = function(){
-	chrome.extension.sendRequest({error: [].slice.call(arguments)})
+	browser.extension.sendRequest({error: [].slice.call(arguments)})
 };
