@@ -31,7 +31,7 @@ if (chrome.omnibox){
 	var resetSuggest = function(){
 		omniboxValue = null;
 		firstResult = null;
-		setSuggest('<url><match>*</match></url> ' + chrome.i18n.getMessage('searchBookmarks'));
+		setSuggest('<url><match>*</match></url> ' + browser.i18n.getMessage('searchBookmarks'));
 		
 	};
 	resetSuggest();
@@ -59,7 +59,7 @@ if (chrome.omnibox){
 			return;
 		}
 		omniboxValue = value;
-		chrome.bookmarks.search(value, function(results){
+		browser.bookmarks.search(value, function(results){
 			if (!results.length){
 				resetSuggest();
 				return;
@@ -118,15 +118,15 @@ if (chrome.omnibox){
 		disposition = disposition || 'currentTab';
 		var url = (text == omniboxValue) ? firstResult.url : text;
 		if (disposition === 'currentTab') {
-			chrome.tabs.getSelected(null, function(tab){
-				chrome.tabs.update(tab.id, {
+			browser.tabs.getSelected(null, function(tab){
+				browser.tabs.update(tab.id, {
 					url: url,
 					active: true
 				});
 			});
 		} else {
 			var openInForeground = (disposition === 'newForegroundTab');
-			chrome.tabs.create({
+			browser.tabs.create({
 				url: url,
 				active: openInForeground
 			});
@@ -140,5 +140,5 @@ if (localStorage.customIcon){
 	var customIcon = JSON.parse(localStorage.customIcon);
 	var imageData = ctx.getImageData(0, 0, 19, 19);
 	for (var key in customIcon) imageData.data[key] = customIcon[key];
-	chrome.browserAction.setIcon({imageData: imageData});
+	browser.browserAction.setIcon({imageData: imageData});
 }
