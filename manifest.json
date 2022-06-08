@@ -1,5 +1,12 @@
 {
 	"name": "Neater Bookmarks for Firefox",
+	"browser_specific_settings": {
+        "gecko": {
+        "id": "marjanbazalac@gmail.com",
+        "strict_min_version": "52.0"
+        }
+},
+
 	"version": "1.0",
 	"manifest_version": 1,
 	"description": "This is a ported addon for FF",
