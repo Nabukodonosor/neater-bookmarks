@@ -102,16 +102,16 @@ function init() {
 	var generateBookmarkHTML = function(title, url, extras){
 		if (!extras) extras = '';
 		var u = url.htmlspecialchars();
-		var favicon = 'chrome://favicon/' + u;
+		//var favicon = 'chrome://favicon/' + u;
 		var tooltipURL = url;
 		if (/^javascript:/i.test(url)){
 			if (url.length > 140) tooltipURL = url.slice(0, 140) + '...';
-			favicon = 'document-code.png';
+			//favicon = 'document-code.png';
 		}
 		tooltipURL = tooltipURL.htmlspecialchars();
 		var name = title.htmlspecialchars() || (httpsPattern.test(url) ? url.replace(httpsPattern, '') : _m('noTitle'));
 		return '<a href="' + u + '"' + ' title="' + tooltipURL + '" tabindex="0" ' + extras + '>'
-			+ '<img src="' + favicon + '" width="16" height="16" alt=""><i>' + name + '</i>' + '</a>';
+			+ '<i>' + name + '</i>' + '</a>';
 	};
 	
 	var generateHTML = function(data, level){
